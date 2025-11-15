@@ -22,11 +22,11 @@ def myNetwork():
     h3 = net.addHost('h3', ip='10.0.4.2/24', defaultRoute='via 10.0.4.1')
 
     info('*** Creating links\n')
-    net.addLink(h1, r1)     # 10.0.0.0/24
-    net.addLink(r1, r2)     # 10.0.1.0/24
-    net.addLink(r2, h2)     # 10.0.2.0/24
-    net.addLink(r2, r3)     # 10.0.3.0/24
-    net.addLink(r3, h3)     # 10.0.4.0/24
+    net.addLink(h1, r1)     
+    net.addLink(r1, r2)     
+    net.addLink(r2, h2)     
+    net.addLink(r2, r3)     
+    net.addLink(r3, h3)     
 
     info('*** Building network\n')
     net.build()
@@ -40,22 +40,18 @@ def myNetwork():
     r2.setIP('10.0.2.1/24', intf='r2-eth1')
     r2.setIP('10.0.3.1/24', intf='r2-eth2')
 
-    # R3
     r3.setIP('10.0.3.2/24', intf='r3-eth0')
     r3.setIP('10.0.4.1/24', intf='r3-eth1')
 
     info('*** Setting up static routes\n')
 
-    # Routes for R1
     r1.cmd('ip route add 10.0.2.0/24 via 10.0.1.2')
     r1.cmd('ip route add 10.0.3.0/24 via 10.0.1.2')
     r1.cmd('ip route add 10.0.4.0/24 via 10.0.1.2')
 
-    # Routes for R2
     r2.cmd('ip route add 10.0.0.0/24 via 10.0.1.1')
     r2.cmd('ip route add 10.0.4.0/24 via 10.0.3.2')
 
-    # Routes for R3
     r3.cmd('ip route add 10.0.0.0/24 via 10.0.3.1')
     r3.cmd('ip route add 10.0.1.0/24 via 10.0.3.1')
     r3.cmd('ip route add 10.0.2.0/24 via 10.0.3.1')
